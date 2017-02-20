@@ -1,0 +1,39 @@
+{
+  "hyper": "F18",
+  "direct": {
+    "I": "Up",
+    "J": "Left",
+    "K": "Down",
+    "L": "Right",
+    "Space": "Enter",
+    "N": "Backspace",
+    "E": "Escape",
+    "M": "Forward_Delete"
+  },
+  "modifiers": {
+    "Q": ["Meta", "Shift", "}"],
+    "Tab": ["Meta", "Shift", "{"],
+    "S": ["Meta", "X"],
+    "D": ["Meta", "C"],
+    "F": ["Meta", "V"],
+    "B": ["Option", "Backspace"],
+    "W": ["Meta", "W"],
+    ",": ["Meta", "Z"],
+    ".": ["Meta", "Shift", "Z"],
+    "`": ["Meta", "`"]
+  },
+  "applications": {
+    "1": "/Applications/Google Chrome.app",
+    "2": "/Applications/IntelliJ IDEA.app",
+    "3": "/Applications/iTerm.app",
+    "4": "/Applications/Spotify.app",
+    "5": "/Applications/Slack.app"
+  },
+  "scripts": {
+    "7": ["osascript", "-e", "set volume output volume (output volume of (get volume settings) - 5) --100%"],
+    "8": ["osascript", "-e", "tell application \"Spotify\" to previous track"],
+    "9": ["osascript", "-e", "tell application \"Spotify\" to playpause"],
+    "0": ["osascript", "-e", "tell application \"Spotify\" to next track"],
+    "-": ["osascript", "-e", "set volume output volume (output volume of (get volume settings) + 5) --100%"]
+  }
+}
