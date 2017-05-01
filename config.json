@@ -5,6 +5,8 @@
     "J": "Left",
     "K": "Down",
     "L": "Right",
+    "Y": "Page_Up",
+    "H": "Page_Down",
     "Space": "Enter",
     "N": "Backspace",
     "E": "Escape",

@@ -40,6 +40,8 @@ class KeyParser {
             "Up" -> return KeyEvent.VK_UP
             "{" -> return KeyEvent.VK_OPEN_BRACKET
             "}" -> return KeyEvent.VK_CLOSE_BRACKET
+            "Page_Down", "Pg_Dn" -> return KeyEvent.VK_PAGE_DOWN
+            "Page_Up", "Pg_Up" -> return KeyEvent.VK_PAGE_UP
             else -> {
                 if (s.length != 1) {
                     throw IllegalArgumentException("\"" + s + "\" does not have a predefined mapping to a KeyEvent")
@@ -74,6 +76,8 @@ class KeyParser {
             "Up" -> return NativeKeyEvent.VC_UP
             "{" -> return NativeKeyEvent.VC_OPEN_BRACKET
             "}" -> return NativeKeyEvent.VC_CLOSE_BRACKET
+            "Page_Down", "Pg_Dn" -> return NativeKeyEvent.VC_PAGE_DOWN
+            "Page_Up", "Pg_Up" -> return NativeKeyEvent.VC_PAGE_UP
             else -> {
                 val i = textToNativeKeyEvent[s]
                 if (i == null) {
