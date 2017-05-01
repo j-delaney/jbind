@@ -31,7 +31,7 @@ class ModifierHandler (configMapping: Map<String, Array<String>>, currentlySendi
                 keySimulator.press(it.keyEventToSend)
                 currentlySending.add(it.nativeKeyEvent)
             }
-            sendKeyList.forEach { keySimulator.release(it.keyEventToSend) }
+            sendKeyList.reversed().forEach { keySimulator.release(it.keyEventToSend) }
         }
     }
 
