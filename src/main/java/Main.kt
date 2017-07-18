@@ -14,8 +14,8 @@ private class OptionParser {
 
 
     @Parameter(names = arrayOf("-c", "--config"),
-            description = "Config file that declares key mappings (default: ~/config/jbind/mappings.json)")
-    var configFilePath: String = Paths.get(System.getenv("HOME"), "config/jbind/mappings.json").toString()
+            description = "Config file that declares key mappings (default: ~/.config/jbind/mappings.json)")
+    var configFilePath: String = Paths.get(System.getenv("HOME"), ".config/jbind/mappings.json").toString()
 
     @Parameter(names = arrayOf("-h", "--help"), help = true)
     var help: Boolean = false
@@ -29,7 +29,7 @@ fun main(args: Array<String>) {
         System.setProperty(org.slf4j.impl.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "DEBUG")
     }
 
-    val c = ConsumeEvent()
+    val c = ConsumeEvent(options.configFilePath)
 
     val globalScreenLogger = Logger.getLogger(GlobalScreen::class.java.`package`.name)
     globalScreenLogger.level = Level.WARNING

@@ -1,4 +1,6 @@
 import com.google.gson.Gson
+import com.google.gson.JsonIOException
+import com.google.gson.JsonSyntaxException
 import com.google.gson.stream.JsonReader
 import handler.*
 import key.KeyParser
@@ -12,9 +14,11 @@ import java.io.FileNotFoundException
 import java.io.FileReader
 import java.util.*
 
-class ConsumeEvent @Throws(NativeHookException::class, AWTException::class, FileNotFoundException::class)
-constructor() : NativeKeyListener {
+class ConsumeEvent @Throws(NativeHookException::class, AWTException::class)
+constructor(configFilePath: String) : NativeKeyListener {
     companion object : KLogging()
+
+    private val configFilePath = configFilePath
 
     private var hyperDown = false
     private val currentlySending: MutableSet<Int> = mutableSetOf()
@@ -34,9 +38,7 @@ constructor() : NativeKeyListener {
     private val hyper: Int
 
     init {
-        val gson = Gson()
-        val jr = JsonReader(FileReader("config.json"))
-        val config = gson.fromJson<Config>(jr, Config::class.java)
+        val config = loadConfigFile()
 
         if (config.hyper == null) {
             throw IllegalArgumentException("You must specify a hyper key")
@@ -61,6 +63,29 @@ constructor() : NativeKeyListener {
         }
     }
 
+    private fun loadConfigFile(): Config {
+        val gson = Gson()
+
+        val fileReader = try {
+            FileReader(this.configFilePath)
+        } catch(e: FileNotFoundException) {
+            logger.error("Could not open config file located at ${this.configFilePath}")
+            System.exit(1)
+            FileReader("") // Unreachable, but needed so fileReader is non-nullable.
+        }
+
+        val jsonReader = JsonReader(fileReader)
+
+        try {
+            return gson.fromJson<Config>(jsonReader, Config::class.java)
+        } catch (e: Exception) {
+            if (e is JsonIOException || e is JsonSyntaxException) {
+                logger.error("Could not parse config file")
+            }
+            throw e
+        }
+    }
+
     private fun tryStopping(e: NativeKeyEvent, event: String) {
         logger.debug { "Attempting to stop event $event, ${NativeKeyEvent.getKeyText(e.keyCode)}" }
         try {
@@ -79,6 +104,8 @@ constructor() : NativeKeyListener {
         // e.getKeyCode() uses same number as NativeKeyEvent
         // KeyEvent is its own thing.
         val keyText = NativeKeyEvent.getKeyText(e.keyCode)
+        logger.debug { "$keyText (${e.keyCode}) pressed" }
+        logger.debug { currentlySending }
         if (currentlySending.remove(e.keyCode)) {
             logger.info { "Not capturing $keyText" }
         } else if (e.keyCode == hyper) {
