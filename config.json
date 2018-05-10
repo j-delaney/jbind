@@ -26,10 +26,14 @@
   },
   "applications": {
     "1": "/Applications/Google Chrome.app",
+    "F2": "/Applications/Sublime Text.app",
     "2": "/Applications/IntelliJ IDEA.app",
+    "F3": "/Applications/CLion.app",
     "3": "/Applications/iTerm.app",
     "4": "/Applications/Spotify.app",
-    "5": "/Applications/Slack.app"
+    "5": "/Applications/Slack.app",
+    "F1": "/Applications/Quiver.app",
+    "T": "/Applications/Things3.app"
   },
   "scripts": {
     "7": ["osascript", "-e", "set volume output volume (output volume of (get volume settings) - 5) --100%"],
